@@ -1,0 +1,121 @@
+    <!-- <p-dock [model]="dockItems" position="left">
+                    <ng-template pTemplate="item" let-item>
+                        <img [src]="item.icon" [alt]="item.label" width="100%">
+                    </ng-template>
+                </p-dock> -->
+
+    <div class="container-fluid center bg-dark">
+        <div class="row"><br></div>
+        <div class="row">
+            <div class="col-md-2"  style="border-spacing: 10px;">
+            <p-card >
+                Location: {{value['name'] | json }}
+             <hr>
+                Temperature : {{  temp - 273.15  | number : '1.0-0' }}°C
+                <hr>
+                <h4>Humidity :{{value3['humidity'] | json}}%</h4>
+                <hr>
+                Kelvin : {{value3['temp'] | json}}
+                <hr>
+                Pressure : {{value3['pressure'] | json}}
+                <hr>
+                <button class="btn btn-primary" (click)="this.refresh();">Refresh</button><br>
+            </p-card> 
+            </div>
+            <div class="col-md-5">               
+                <p-card>
+                    <!-- <div class="card">
+                        <h5>Vertical</h5>
+                        <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+                    </div> -->
+                    <h4 class="text-center">Top Crop Progres Data</h4>
+                    <table class="table table-bordered table-dark border-primary">
+                        <thead>
+                        <tr>
+                            <th scope="col">B2</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Season</th>
+                            <th scope="col">Grade</th>
+                            <th scope="col">Quinta Rate (100Kg)</th>
+                        </tr>
+                        </thead>
+                        <tbody *ngFor="let crop of crp" style="height: 55px;" class="text-center">
+                        <tr>
+                            <th> {{crop.id}} </th>
+                            <td> {{crop.cropName}} </td>
+                            <td> {{crop.cropSeason}} </td>
+                            <td> {{crop.grade}} </td>
+                            <td class="text-center"> ₹ {{crop.quintaRate}} /- </td>
+                    
+
+                        </tr>
+                        
+                        </tbody>
+                    </table>
+                </p-card>
+            </div>
+            <div class="col-md-5 text-center">
+                <!-- <p-card>
+                    <div class="card">
+                        <h5>Horizontal</h5>
+                        <p-chart type="bar" [data]="basicData" [options]="horizontalOptions"></p-chart>
+                    </div>
+                </p-card> -->
+            <div class="row">
+                <div class="col-md-6">
+                    <p-card>
+                        <h2>Total Pesticide</h2>
+                        <hr>
+                        <h4> {{Pdata.length}} </h4>
+                    </p-card>
+                </div>
+                <div class="col-md-6">
+                    <p-card>
+                        <h2>Total Fertilizer</h2>
+                        <hr>
+                        <h4>   {{fert.length}}  </h4>
+                    </p-card>
+                </div>  
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <p-card>
+                        <h2>Total Crop</h2>
+                        <hr>
+                        <h4>   {{crp.length}}  </h4>
+                    </p-card>
+                </div>
+                <div class="col-md-6">
+                    <p-card>
+                        <h2>Total Investars</h2>
+                        <hr>
+                        <h4> {{prod.length}} </h4>
+                    </p-card>
+                </div>  
+            </div>
+            </div>
+    </div>
+    <br>
+    <div class="row bg-dark">
+            <div class="col-md-4">
+                <p-card>
+                    <h5>Utility usage</h5>
+                    <p-chart type="doughnut" [data]="data" [options]="chartOptions" [style]="{'width': '40%'}"></p-chart>
+                </p-card>
+            </div>
+            <div class="col-md-4">
+                <p-card>
+                    <h5>Maximum Coverage</h5>
+                    <p-chart type="polarArea" [data]="data" [options]="chartOptions" [style]="{'width': '40%'}"></p-chart>
+                </p-card>
+            </div>
+            <div class="col-md-4">
+                <p-card>
+                    <h5>Total Products</h5>
+                    <p-chart type="pie" [data]="data" [options]="chartOptions"  [style]="{'width': '40%'}"></p-chart>
+                </p-card>
+            </div>
+    </div>
+    <div class="row"><br></div>
+    </div>

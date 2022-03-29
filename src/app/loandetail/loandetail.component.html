@@ -1,0 +1,152 @@
+<p-dock [model]="dockItems" position="bottom">
+    <ng-template pTemplate="item" let-item>
+        <img [src]="item.icon" [alt]="item.label" width="100%">
+    </ng-template>
+</p-dock>
+
+
+<kendo-grid
+[kendoGridBinding]="prod"
+kendoGridSelectBy="id"
+[pageSize]="7"
+[pageable]="true"
+[height]="500"
+[columnMenu]="{ filter: true }"
+>
+<button kendoGridExcelCommand type="button" icon="file-excel">
+    Export to Excel
+  </button>
+<kendo-grid-column field="id" title="id" [width]="130">
+</kendo-grid-column>
+<kendo-grid-column field="user.fname" title="User Name" [width]="200">
+</kendo-grid-column>
+<kendo-grid-column field="loanAmount" title="loan Amount" [width]="200">
+</kendo-grid-column>
+<kendo-grid-column field="dueDate" title="dueDate" [width]="200" filter="date" format='{0:MM/dd/yyyy}' kendo-grid-column-date-format>
+    <!-- <ng-template kendoGridCellTemplate let-dataItem>
+        {{ dueDate | date: 'MM/dd/yyyy'}}
+    </ng-template> -->
+</kendo-grid-column>
+<kendo-grid-column field="repayInterval" title="repay Interval" [width]="200">
+</kendo-grid-column>
+<kendo-grid-column field="loanStatus" title="loan Status" [width]="200">
+</kendo-grid-column>
+<kendo-grid-column field="intrestAmount" title="Intrest Amount" [width]="200">
+</kendo-grid-column>
+<kendo-grid-column field="id" title="" [width]="200">
+    <ng-template kendoGridCellTemplate let-dataItem>
+        <button class="btn btn-warning" (click)="updateme(dataItem)"> 
+            Edit
+        </button> &nbsp;
+        <button class="btn btn-danger" (click)="deleteme(dataItem)"> 
+            Delete
+        </button> 
+    </ng-template>
+</kendo-grid-column>
+</kendo-grid>
+
+<!-- Create Data -->
+
+
+<p-dialog header="Create Agro-Invest" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false">
+   <div class="grid p-fluid">
+    <form [formGroup]="LoanInsert">
+        <span class="p-float-label" width="100">
+            <p-dropdown [options]="Mdata"   optionLabel="fname" formControlName="userId"  [showClear]="true"></p-dropdown>
+            <label for="float-input"> user</label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="number" formControlName="loanAmount" pInputText > 
+            <label for="float-input">loan Amount</label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="number" formControlName="repayInterval" pInputText > 
+            <label for="float-input">repay Interval</label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <!-- <input id="float-input" type="number" formControlName="dueDate" pInputText >  -->
+            <!-- <p-calendar id="dateformat" dateFormat="mm-dd-yy" formControlName="dueDate" inputId="dateformat"></p-calendar> -->
+            <label for="float-input">due Date</label>
+            <div class="field col-12 md:col-2">
+                <p-calendar inputId="basic" [inline]="true" [showWeek]="true"  formControlName="dueDate" ></p-calendar>
+            </div>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="text" formControlName="loanStatus" pInputText > 
+            <label for="float-input">loan Status</label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="number" formControlName="intrestAmount" pInputText > 
+            <label for="float-input">intrest Amount</label>
+        </span><br>
+
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <button pButton width="50%" style="background-color: var(--green-600);" type="button" label="Submit" (click)="pushdbagro()" ></button>
+             
+            </div>
+            <div class="col-md-6">
+                <button width="50%" pButton style="background-color: var(--red-600);" type="button" label="Exit" (click)="this.Loandata.reset();this.displayModal=false;" ></button>     
+            </div>
+           </div>
+    </form>
+   </div>
+</p-dialog>
+
+<!-- Edit Loandetail -->
+
+
+<p-dialog header="Edit Agro-Invest" [(visible)]="displayModalEdit" [modal]="true" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false">
+   <div class="grid p-fluid">
+    <form [formGroup]="Loandata">
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="text" formControlName="id" [readonly]="true" pInputText > 
+            <label for="float-input">Id </label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <p-dropdown [options]="Mdata"   optionLabel="fname" formControlName="userId"  [showClear]="true"></p-dropdown>
+            <label for="float-input"> user</label>
+            
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="number" formControlName="loanAmount" pInputText > 
+            <label for="float-input">loan Amount</label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="number" formControlName="repayInterval" pInputText > 
+            <label for="float-input">repay Interval</label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <label for="float-input">due Date</label>
+            <!-- <input id="float-input" type="number" formControlName="dueDate" pInputText >  -->
+            <!-- <p-calendar id="dateformat" dateFormat="mm-dd-yy" formControlName="dueDate" inputId="dateformat"></p-calendar> -->
+            <div class="field col-12 md:col-2">
+            <p-calendar inputId="basic" [inline]="true" [showWeek]="true"  formControlName="dueDate" ></p-calendar>
+        </div>
+          
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="text" formControlName="loanStatus" pInputText > 
+            <label for="float-input">loan Status</label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="number" formControlName="intrestAmount" pInputText > 
+            <label for="float-input">intrest Amount</label>
+        </span><br>
+
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <button pButton width="50%" style="background-color: var(--green-600);" type="button" label="Submit" (click)="updatemesubmit()" ></button>
+             
+            </div>
+            <div class="col-md-6">
+                <button width="50%" pButton style="background-color: var(--red-600);" type="button" label="Exit" (click)="this.Loandata.reset();this.displayModalEdit=false;" ></button>     
+            </div>
+           </div>
+    </form>
+   </div>
+</p-dialog>

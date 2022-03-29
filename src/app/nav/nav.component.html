@@ -1,0 +1,14 @@
+
+<p-menubar>  
+  <img id="logo" src="../../assets/agrologo.png" width="110" height="50"  routerLink="login-component" />
+  <span *ngIf="logme != 'true'">
+  <button pButton label="login" icon="pi pi-power-off"  (click)="vald()" class="p-button-success" routerLink="/login-component" routerLinkActive="active"></button>
+  </span>
+  <span *ngIf="logme == 'true'">
+    <!-- <button pButton label="Agro" icon="pi pi-power-off" (click)="vald()" class="p-button-success" routerLink="/agroinvest-component" routerLinkActive="active"></button> -->
+    <!-- <p-megaMenu [model]="items"></p-megaMenu> -->
+    <button class="p-button-success" type="button" pButton icon="pi pi-bars" label="Show" (click)="menu.toggle($event)"></button>
+    <p-menu #menu [popup]="true" [model]="items"></p-menu>
+    </span>
+ 
+</p-menubar>

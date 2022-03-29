@@ -1,0 +1,40 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"><br><br><br><br><br>
+            <div class="grid p-fluid">
+                    <p-card header="Login" subheader="Login to Agro36O" [style]="{width: '360px'}" styleClass="p-card-shadow" class="p-col-6">
+                    <div class="">
+                       <form [formGroup]="Login" >
+                        <span class="p-float-label" width="100">
+                        <input type="email" name="email" formControlName="email"  pInputText  required>
+                        <label for="float-input">MailID</label>
+                        </span>
+                        <br><br>
+                        <span class="p-float-label" width="100">
+                        <!-- <input type="password" name="password" formControlName="password"  placeholder="password" pInputText  required> -->
+                        <p-password [(ngModel)]="value3" formControlName="password" type="password" ></p-password>
+                        <label for="float-input">password</label>
+                        </span> <br>
+                        <button class="btn btn-dark" type="submit"  style="background-color: var(--green-600);" (click)="onSubmit()">Submit</button>  
+                       </form>
+                       </div>
+                </p-card>  
+            </div>
+                <span >Create an account?   <p-badge [value]="val" class="btn" severity="warning" styleClass="mr-2" routerLink="/register-component" routerLinkActive="active"></p-badge></span> 
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+<div  *ngIf="ermsg == true"  class="Modalv">
+    <div class="Modal-content">
+      <p>Log Message</p>
+      <div class="modal-body" >
+          {{model}}
+      </div>
+       <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="show()">Close</button>
+        </div>
+    </div>
+  </div>

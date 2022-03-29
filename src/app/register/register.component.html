@@ -1,0 +1,31 @@
+
+<br><br>
+<div class="grid p-fluid">
+<p-card header="Register" subheader="Create an account for Agro36O" [style]="{width: '360px'}" styleClass="p-card-shadow" class="p-col-6">
+<form [formGroup]="Register">
+    <span class="p-float-label" width="100">
+        <input id="float-input" type="text" formControlName="fname" pInputText > 
+        <label for="float-input">First Name</label>
+    </span><br>
+    <span class="p-float-label" width="100">
+        <input id="float-input" type="email" formControlName="email" pInputText > 
+        <label for="float-input">MailID</label>
+    </span><br>
+    
+    <div class="field">
+        <label style="font-size:x-small;">DOB</label>
+        <br>
+        <p-calendar id="dateformat" dateFormat="mm-dd-yy" formControlName="dob" inputId="dateformat"></p-calendar>
+    </div><br>
+
+    <span class="p-float-label" width="100">
+      
+      <p-password [(ngModel)]="value3" formControlName="password" type="password" ></p-password>
+      <label for="float-input">Password</label>
+    </span> 
+    <br>
+    <button pButton style="background-color: var(--green-600);" type="button" label="Submit" (click)="show()" ></button>
+</form>
+
+</p-card>
+</div>

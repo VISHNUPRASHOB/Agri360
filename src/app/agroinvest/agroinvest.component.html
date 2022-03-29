@@ -1,0 +1,171 @@
+<p-dock [model]="dockItems" position="bottom">
+    <ng-template pTemplate="item" let-item>
+        <img [src]="item.icon" [alt]="item.label" width="100%">
+    </ng-template>
+</p-dock>
+
+<kendo-grid
+[kendoGridBinding]="prod"
+kendoGridSelectBy="id"
+[pageSize]="7"
+[pageable]="true"
+[height]="500"
+[columnMenu]="{ filter: true }"
+>
+<button kendoGridExcelCommand type="button" icon="file-excel">
+    Export to Excel
+  </button>
+<kendo-grid-column field="id" title="id" [width]="220">
+</kendo-grid-column>
+<kendo-grid-column field="seasonName" title="seasonName" [width]="220">
+</kendo-grid-column>
+<kendo-grid-column field="investAmount" title="investAmount" [width]="220">
+</kendo-grid-column>
+<kendo-grid-column field="productSpend" title="productSpend" [width]="220">
+</kendo-grid-column>
+<kendo-grid-column field="profitAmount" title="profitAmount" [width]="220">
+</kendo-grid-column>
+<kendo-grid-column field="lossAmount" title="lossAmount" [width]="220">
+</kendo-grid-column>
+<kendo-grid-column field="fertilizer.fertilName" title="fertilizer name" [width]="220">
+</kendo-grid-column>
+<kendo-grid-column field="pesticide.pestName" title="pesticide name" [width]="220">
+</kendo-grid-column>
+<kendo-grid-column field="user.fname" title="user" [width]="220">
+</kendo-grid-column>
+<kendo-grid-column field="crop.cropName" title="crop name" [width]="220">
+</kendo-grid-column>
+
+<kendo-grid-column field="id" title="" [width]="220">
+    <ng-template kendoGridCellTemplate let-dataItem>
+        <button class="btn btn-warning" (click)="updateme(dataItem)"> 
+            Edit
+        </button> &nbsp;
+        <button class="btn btn-danger" (click)="deleteme(dataItem)"> 
+            Delete
+        </button> 
+    </ng-template>
+</kendo-grid-column>
+
+</kendo-grid>
+
+<p-dialog header="Create Agro-Invest" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false">
+   <div class="grid p-fluid">
+    <form [formGroup]="AgroInsert">
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="text" formControlName="seasonName" pInputText > 
+            <label for="float-input">season Name </label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="number" formControlName="investAmount" pInputText > 
+            <label for="float-input">invest Amount</label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="number" formControlName="productSpend" pInputText > 
+            <label for="float-input"> product Spend</label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="number" formControlName="profitAmount" pInputText > 
+            <label for="float-input">  profit Amount</label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="number" formControlName="lossAmount" pInputText > 
+            <label for="float-input"> loss Amount </label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <p-dropdown [options]="fert"   optionLabel="fertilName" formControlName="fertilizerId"  [showClear]="true"></p-dropdown>
+            <label for="float-input"> Fertilizer </label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <p-dropdown [options]="Pdata"   optionLabel="pestName" formControlName="pesticideId" [showClear]="true"></p-dropdown>
+            <label for="float-input"> pesticide Id </label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <p-dropdown [options]="Mdata"   optionLabel="fname" formControlName="userId"  [showClear]="true"></p-dropdown>
+            <label for="float-input"> user</label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <p-dropdown [options]="crp"   optionLabel="cropName" formControlName="cropId"  [showClear]="true"></p-dropdown>
+            <label for="float-input">  crop Id </label>
+        </span>
+
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <button pButton width="50%" style="background-color: var(--green-600);" type="button" label="Submit" (click)="pushdbagro()" ></button>
+             
+            </div>
+            <div class="col-md-6">
+                <button width="50%" pButton style="background-color: var(--red-600);" type="button" label="Exit" (click)="this.Agrodata.reset();this.displayModal=false;" ></button>     
+            </div>
+           </div>
+    </form>
+   </div>
+   
+        <!-- <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text"></p-button>
+        </ng-template> -->
+</p-dialog>
+
+<p-dialog header="Edit Agro-Invest" [(visible)]="displayModalEdit" [modal]="true" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="true">
+   <div class="grid p-fluid">
+    <form [formGroup]="Agrodata">
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="text" formControlName="id" [readonly]="true" pInputText > 
+            <label for="float-input">Id </label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="text" formControlName="seasonName" pInputText > 
+            <label for="float-input">season Name </label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="number" formControlName="investAmount" pInputText > 
+            <label for="float-input">invest Amount</label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="number" formControlName="productSpend" pInputText > 
+            <label for="float-input"> product Spend</label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="number" formControlName="profitAmount" pInputText > 
+            <label for="float-input">  profit Amount</label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <input id="float-input" type="number" formControlName="lossAmount" pInputText > 
+            <label for="float-input"> loss Amount </label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <p-dropdown [options]="fert"   optionLabel="fertilName" formControlName="fertilizerId"  [showClear]="true"></p-dropdown>
+            <label for="float-input"> Fertilizer </label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <p-dropdown [options]="Pdata"   optionLabel="pestName" formControlName="pesticideId" [showClear]="true"></p-dropdown>
+            <label for="float-input"> pesticide Id </label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <p-dropdown [options]="Mdata"   optionLabel="fname" formControlName="userId"  [showClear]="true"></p-dropdown>
+            <label for="float-input"> user</label>
+        </span><br>
+        <span class="p-float-label" width="100">
+            <p-dropdown [options]="crp"   optionLabel="cropName" formControlName="cropId"  [showClear]="true"></p-dropdown>
+            <label for="float-input">  crop Id </label>
+        </span>
+        <!-- (click)="this.Agrodata.reset() -->
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <button width="50%" pButton style="background-color: var(--green-600);" type="button" label="Submit" (click)="updatemesubmit()" ></button>
+             
+            </div>
+            <div class="col-md-6">
+                <button width="50%" pButton style="background-color: var(--red-600);" type="button" label="Exit" (click)="this.Agrodata.reset();this.displayModalEdit=false;" ></button>     
+            </div>
+           </div>
+         </form>
+   </div>
+        <!-- <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="displayModalEdit=false" label="Ok" styleClass="p-button-text"></p-button>
+        </ng-template> -->
+</p-dialog>
